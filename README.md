@@ -11,6 +11,12 @@ To backup
 databases on
 [OpenBSD](https://www.openbsd.org/).
 
+## wg\_openbsd.sh
+Start/Stop
+[wireguard](https://www.wireguard.com/)
+client on
+[OpenBSD](https://www.openbsd.org/).
+
 
 ## Other Comments
 *[Support OpenBSD](https://www.openbsd.org/donations.html)*
