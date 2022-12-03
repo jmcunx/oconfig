@@ -84,8 +84,9 @@ then
             TMP=\$TMPDIR
             TEMP=\$TMPDIR
             TEMPDIR=\$TMPDIR
+            TMUX_TMPDIR=\$TMPDIR
             export DISTRO DOMAIN HOST HOSTNAME IP OS WORK_WORKSTATION
-            export TMPDIR TMP TEMP TEMPDIR
+            export TMPDIR TMP TEMP TEMPDIR TMUX_TMPDIR
             ;;
     esac
 fi
