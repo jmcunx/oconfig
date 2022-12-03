@@ -95,20 +95,23 @@ EOF
 f_generate()
 {
     l_gen_wdev=""
+    l_gen_wother=""
     l_gen_ip="UNKNOWN"
     l_gen_profile=""
     l_gen_login=""
     l_gen_now_fmt=`date '+%Y-%m-%d %H:%M:%S'`
+    l_gen_ecode="0"
 
     case "$HOST" in
-	"hairball")
-	    l_gen_wdev="ath0"
-	    ;;
 	"fuzzball")
 	    l_gen_wdev="iwm0"
 	    ;;
 	"qball")
 	    l_gen_wdev="iwn0"
+	    ;;
+	"hairball")
+	    l_gen_wdev="urtwn0"
+	    l_gen_wother="ath0"
 	    ;;
 	*)
 	    echo "E003: $HOST not supported"
@@ -132,9 +135,16 @@ f_generate()
     fi
 
     /sbin/ifconfig "$l_gen_wdev" > /dev/null 2>&1
-    if test "$?" -eq "0"
+    l_gen_ecode="$?"
+    if test "$l_gen_ecode" -ne "0" -a "$l_gen_wother" != ""
     then
-	l_gen_ip=`/sbin/ifconfig "$l_gen_wdev" | sed 's/^[ 	]*//g' | grep '^inet ' | head -n 1 | awk '{print $2}'`
+	l_gen_wdev="$l_gen_wother"
+	/sbin/ifconfig "$l_gen_wdev" > /dev/null 2>&1
+	l_gen_ecode="$?"
+    fi
+    if test "$l_gen_ecode" -eq "0"
+    then
+	l_gen_ip=`/sbin/ifconfig "$l_gen_wdev" | grep 'inet ' | head -n 1 | awk '{print $2}'`
     fi
 
     f_make_login \

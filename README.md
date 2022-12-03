@@ -11,6 +11,9 @@ To backup
 databases on
 [OpenBSD](https://www.openbsd.org/).
 
+## create\_obsd.sh
+Generate custom settings that can be sourced in on login.
+
 ## wg\_openbsd.sh
 Start/Stop
 [wireguard](https://www.wireguard.com/)
