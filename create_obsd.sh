@@ -39,6 +39,7 @@ if ( ! "\`id -u\`" == "0" ) then
     setenv TMP              \$TMPDIR
     setenv TEMP             \$TMPDIR
     setenv TEMPDIR          \$TMPDIR
+    setenv TMUX_TMPDIR      \$TMPDIR
 endif
 EOF
 
