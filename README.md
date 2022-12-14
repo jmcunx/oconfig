@@ -14,6 +14,11 @@ databases on
 ## create\_obsd.sh
 Generate custom settings that can be sourced in on login.
 
+## restart\_net.sh
+Restarts network via /etc/netstart,
+but will stop wireguard if active.
+
+
 ## wg\_openbsd.sh
 Start/Stop
 [wireguard](https://www.wireguard.com/)
