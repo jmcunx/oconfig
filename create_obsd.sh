@@ -29,9 +29,9 @@ if ( ! "\`id -u\`" == "0" ) then
 	mkdir \$TMPDIR >& /dev/null && chmod 700 \$TMPDIR
     endif
     setenv DISTRO           OpenBSD
-    setenv DOMAIN           hsd1.ma.comcast.net
     setenv HOST             $HOST
-    setenv HOSTNAME         $HOST.hsd1.ma.comcast.net
+    setenv DOMAIN           $DOMAIN
+    setenv HOSTNAME         $HOST.$DOMAIN
     setenv IP               10.0.0.00
     setenv OS               OpenBSD
     setenv WORK_WORKSTATION NO
@@ -76,7 +76,8 @@ then
             DISTRO=OpenBSD
             DOMAIN=hsd1.ma.comcast.net
             HOST=$HOST
-            HOSTNAME=$HOST.hsd1.ma.comcast.net
+	    DOMAIN=$DOMAIN
+            HOSTNAME=$HOST.$DOMAIN
             IP=10.0.0.00
             OS=OpenBSD
             WORK_WORKSTATION=NO
@@ -167,8 +168,9 @@ f_generate()
 sname="$0"
 
 OS="`uname -s`"
-HOST="`uname -n | awk -F '.' '{print $1}'`"
-export OS HOST
+HOST=`cat /etc/myname | awk -F '.' '{print $1}'`
+DOMAIN=`cat /etc/myname | sed "s/$HOST\.//"`
+export OS HOST DOMAIN
 
 if test "$OS" = "OpenBSD"
 then
