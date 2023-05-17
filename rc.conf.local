@@ -1,0 +1,6 @@
+apmd_flags=-L -Z 5
+obsdfreqd_flags=-m 75,55 -l 20,0 -T 70,60 -r 70 -s 3 -t 3000
+pkg_scripts=vnstatd obsdfreqd
+shlib_dirs=/opt/jmc/lib
+sndiod_flags=-f rsnd/0 -F rsnd/1
+xenodm_flags=
