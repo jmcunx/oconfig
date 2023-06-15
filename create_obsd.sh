@@ -35,11 +35,11 @@ if ( ! "\`id -u\`" == "0" ) then
     setenv IP               10.0.0.00
     setenv OS               OpenBSD
     setenv WORK_WORKSTATION NO
-    setenv TMPDIR           \$TMPDIR
     setenv TMP              \$TMPDIR
     setenv TEMP             \$TMPDIR
     setenv TEMPDIR          \$TMPDIR
     setenv TMUX_TMPDIR      \$TMPDIR
+    setenv RAMDISK          $RAMDISK
 endif
 EOF
 
@@ -85,8 +85,9 @@ then
             TEMP=\$TMPDIR
             TEMPDIR=\$TMPDIR
             TMUX_TMPDIR=\$TMPDIR
+            RAMDISK=$RAMDISK
             export DISTRO DOMAIN HOST HOSTNAME IP OS WORK_WORKSTATION
-            export TMPDIR TMP TEMP TEMPDIR TMUX_TMPDIR
+            export TMPDIR TMP TEMP TEMPDIR TMUX_TMPDIR RAMDISK
             ;;
     esac
 fi
@@ -177,5 +178,18 @@ then
 else
     echo "E001: $OS not supported"
 fi
+
+grep "^swap /mnt/mfs" < /etc/fstab > /dev/null 2>&1
+if test "$?" -eq "0"
+then 
+    RAMDISK="/mnt/mfs/$USER"
+    if test ! -d "$RAMDISK"
+    then
+        mkdir "$RAMDISK" && chmod 700 "$RAMDISK"
+    fi
+else
+    RAMDISK="$TMPDIR"
+fi 
+export RAMDISK
 
 ### DONE, do not exit
