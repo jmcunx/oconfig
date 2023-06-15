@@ -17,16 +17,21 @@ cat << EOF
 #
 
 if ( ! "\`id -u\`" == "0" ) then
-    if ( ! \$?USER ) then
-        setenv USER "\`id -un\`"
-    endif
     if ( -d /mnt/tmpfs ) then
         setenv TMPDIR /mnt/tmpfs/\$USER
     else
         setenv TMPDIR /tmp/\$USER
     endif
+    if ( -d /mnt/mfs ) then
+        setenv RAMDISK /mnt/mfs/\$USER
+    else
+        setenv RAMDISK /tmp/\$USER
+    endif
     if ( ! -d \$TMPDIR ) then
         mkdir \$TMPDIR >& /dev/null && chmod 700 \$TMPDIR
+    endif
+    if ( ! -d \$RAMDISK ) then
+        mkdir \$RAMDISK >& /dev/null && chmod 700 \$RAMDISK
     endif
     setenv DISTRO           OpenBSD
     setenv HOST             $HOST
@@ -39,7 +44,6 @@ if ( ! "\`id -u\`" == "0" ) then
     setenv TEMP             \$TMPDIR
     setenv TEMPDIR          \$TMPDIR
     setenv TMUX_TMPDIR      \$TMPDIR
-    setenv RAMDISK          $RAMDISK
 endif
 EOF
 
@@ -68,10 +72,19 @@ then
             else
                 TMPDIR="/tmp/\$USER"
             fi
-            export TMPDIR
+            if test -d "/mnt/mfs"
+            then
+                RAMDISK="/mnt/mfs/\$USER"
+            else
+                RAMDISK="/tmp/\$USER"
+            fi
             if test ! -d "\$TMPDIR"
             then
                 mkdir "\$TMPDIR" 2> /dev/null && chmod 700 "\$TMPDIR"
+            fi
+            if test ! -d "\$RAMDISK"
+            then
+                mkdir \$RAMDISK 2> /dev/null && chmod 700 \$RAMDISK
             fi
             DISTRO=OpenBSD
             HOST=$HOST
@@ -85,7 +98,6 @@ then
             TEMP=\$TMPDIR
             TEMPDIR=\$TMPDIR
             TMUX_TMPDIR=\$TMPDIR
-            RAMDISK=$RAMDISK
             export DISTRO DOMAIN HOST HOSTNAME IP OS WORK_WORKSTATION
             export TMPDIR TMP TEMP TEMPDIR TMUX_TMPDIR RAMDISK
             ;;
@@ -178,18 +190,5 @@ then
 else
     echo "E001: $OS not supported"
 fi
-
-grep "^swap /mnt/mfs" < /etc/fstab > /dev/null 2>&1
-if test "$?" -eq "0"
-then 
-    RAMDISK="/mnt/mfs/$USER"
-    if test ! -d "$RAMDISK"
-    then
-        mkdir "$RAMDISK" && chmod 700 "$RAMDISK"
-    fi
-else
-    RAMDISK="$TMPDIR"
-fi 
-export RAMDISK
 
 ### DONE, do not exit
