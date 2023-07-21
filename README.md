@@ -39,5 +39,8 @@ Start/Stop
 client on
 [OpenBSD](https://www.openbsd.org/).
 
+## xterm.txt
+My X resources for Xterm(1)
+
 ## Other Comments
 *[Support OpenBSD](https://www.openbsd.org/donations.html)*
