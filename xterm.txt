@@ -1,0 +1,43 @@
+XTerm*VT100.Translations: #override\n\
+	Ctrl<KeyPress>Up : scroll-back(1,line)\n\
+	Ctrl<KeyPress>Down : scroll-forw(1,line)\n\
+	Ctrl<KeyPress>Prior : scroll-back(1,page)\n\
+	Ctrl<KeyPress>Next : scroll-forw(1,page)
+XTerm*rightScrollBar:	false
+XTerm*LoginShell:	true
+XTerm*saveLines:	5000
+XTerm*fullCursor:	true
+XTerm*scrollBar:	False
+XTerm*reverseWrap:	true
+XTerm*titleBar:		false
+XTerm*visualBell:	false
+XTerm*metaSendsEscape:  true
+XTerm.vt100.geometry:	80x24+42+48
+XTerm*CharClass:	33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+XTerm*background:	black
+XTerm*BorderColor:	yellow
+XTerm*foreground:	rgb:99/99/99
+XTerm*cursorUnderLine:	false
+XTerm*cursorBlink:	false
+
+! UTF-8
+XTerm*locale:	true
+XTerm*utf8:	1
+
+!---------------------------- for OpenBSD UTF-8, 
+!---------------------------- set: export LC_ALL=en_US.UTF-8
+XTerm*vt100*font:	-xos4-terminus-medium-r-normal--28-280-72-72-c-140-iso8859-1
+XTerm*font:	-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso8859-1
+XTerm*.font1:	-xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso8859-1
+XTerm*.font2:	-xos4-terminus-bold-r-normal--18-180-72-72-c-90-iso8859-1
+XTerm*.font3:	-xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso8859-1
+XTerm*.font4:	-xos4-terminus-bold-r-normal--22-220-72-72-c-110-iso8859-1
+XTerm*.font5:	-xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso8859-1
+XTerm*.font6:	-xos4-terminus-medium-r-normal--28-280-72-72-c-140-iso8859-1
+XTerm*.font7:	-xos4-terminus-medium-r-normal--32-320-72-72-c-160-iso8859-1
+!------------------------------
+
+! fix backspace in tmux
+XTerm*ptyInitialErase:	true
+XTerm*backarrowKeyIsErase:   true
+
